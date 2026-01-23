@@ -1,0 +1,25 @@
+{% extends 'web/base.html' %}
+
+{% block title %}Operations - Umucyo MVP{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h1 class="h2">SOAP Operations</h1>
+</div>
+
+<div class="row">
+    {% for op in operations %}
+    <div class="col-md-4 mb-4">
+        <div class="card h-100 shadow-sm hover-shadow">
+            <div class="card-body text-center">
+                <h5 class="card-title">{{ op }}</h5>
+                <p class="card-text text-muted">Execute this operation.</p>
+                <a href="{% url 'operation_execute' op %}" class="btn btn-outline-primary stretched-link">
+                    Open Form &rarr;
+                </a>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

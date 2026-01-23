@@ -1,0 +1,629 @@
+<!-- This XML file does not appear to have any style information associated with it. The document tree is shown below. -->
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:ax23="http://bank.vo.hub.roneps.minecofin.rw/xsd" xmlns:ns="http://security.service.hub.roneps.minecofin.rw" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:ax25="http://security.vo.hub.roneps.minecofin.rw/xsd" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:ns1="http://org.apache.axis2/xsd" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" targetNamespace="http://security.service.hub.roneps.minecofin.rw">
+<wsdl:documentation> Please Type your service description here </wsdl:documentation>
+<wsdl:types>
+<xs:schema targetNamespace="http://security.vo.hub.roneps.minecofin.rw/xsd" attributeFormDefault="qualified" elementFormDefault="qualified">
+<xs:complexType name="AdvancePaymentInfoRequest">
+<xs:sequence>
+<xs:element name="advancePaymentInfo" minOccurs="0" type="ax25:AdvancePaymentInfo" nillable="true"/>
+<xs:element name="contractDate" minOccurs="0" type="xs:string" nillable="true"/>
+<xs:element name="contractName" minOccurs="0" type="xs:string" nillable="true"/>
+<xs:element name="contractNumber" minOccurs="0" type="xs:string" nillable="true"/>
+<xs:element name="contractSerialNumber" minOccurs="0" type="xs:string" nillable="true"/>
+<xs:element name="id" minOccurs="0" type="xs:string" nillable="true"/>
+<xs:element name="issueBankInfo" minOccurs="0" type="ax25:IssueBankInfo" nillable="true"/>
+<xs:element name="password" minOccurs="0" type="xs:string" nillable="true"/>
+<xs:element name="procuringEnityInfo" minOccurs="0" type="ax25:ProcuringEntityInfo" nillable="true"/>
+<xs:element name="supplierInfo" minOccurs="0" type="ax25:SupplierInfo" nillable="true"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="AdvancePaymentInfo">
+<xs:sequence>
+<xs:element name="accountNumber" minOccurs="0" type="xs:string" nillable="true"/>
+<xs:element name="address" minOccurs="0" type="xs:string" nillable="true"/>
+<xs:element name="amount" minOccurs="0" type="xs:string" nillable="true"/>
+<xs:element name="amountCharacter" minOccurs="0" type="xs:string" nillable="true"/>
+<xs:element name="expireDate" minOccurs="0" type="xs:string" nillable="true"/>
+<xs:element name="guaranteeNumber" minOccurs="0" type="xs:string" nillable="true"/>
+<xs:element name="issueDate" minOccurs="0" type="xs:string" nillable="true"/>
+<xs:element name="name" minOccurs="0" type="xs:string" nillable="true"/>
+<xs:element name="position" minOccurs="0" type="xs:string" nillable="true"/>
+<xs:element name="startDate" minOccurs="0" type="xs:string" nillable="true"/>
+<xs:element name="status" minOccurs="0" type="xs:string" nillable="true"/>
+<xs:element name="unit" minOccurs="0" type="xs:string" nillable="true"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="IssueBankInfo">
+<xs:sequence>
+<xs:element name="bankBranchName" minOccurs="0" type="xs:string" nillable="true"/>
+<xs:element name="bankName" minOccurs="0" type="xs:string" nillable="true"/>
+<xs:element name="bankTINNumber" minOccurs="0" type="xs:string" nillable="true"/>
+<xs:element name="branchAddress" minOccurs="0" type="xs:string" nillable="true"/>
+<xs:element name="branchManagerName" minOccurs="0" type="xs:string" nillable="true"/>
+<xs:element name="comment" minOccurs="0" type="xs:string" nillable="true"/>
+<xs:element name="email" minOccurs="0" type="xs:string" nillable="true"/>
+<xs:element name="faxNumber" minOccurs="0" type="xs:string" nillable="true"/>
+<xs:element name="securityRepresentiveName" minOccurs="0" type="xs:string" nillable="true"/>
+<xs:element name="telNumber" minOccurs="0" type="xs:string" nillable="true"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="ProcuringEntityInfo">
+<xs:sequence>
+<xs:element name="addressPE" minOccurs="0" type="xs:string" nillable="true"/>
+<xs:element name="chargerNameInPE" minOccurs="0" type="xs:string" nillable="true"/>
+<xs:element name="pEName" minOccurs="0" type="xs:string" nillable="true"/>
+<xs:element name="pETINNumber" minOccurs="0" type="xs:string" nillable="true"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="SupplierInfo">
+<xs:sequence>
+<xs:element name="addressSupplier" minOccurs="0" type="xs:string" nillable="true"/>
+<xs:element name="supplierName" minOccurs="0" type="xs:string" nillable="true"/>
+<xs:element name="supplierRepresentiveName" minOccurs="0" type="xs:string" nillable="true"/>
+<xs:element name="supplierTINNumber" minOccurs="0" type="xs:string" nillable="true"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="AdvancePaymentInfoResponse">
+<xs:sequence>
+<xs:element name="resultCode" minOccurs="0" type="xs:string" nillable="true"/>
+<xs:element name="resultMessage" minOccurs="0" type="xs:string" nillable="true"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="CreditLineFacilityRequest">
+<xs:sequence>
+<xs:element name="creditLineFacilityInfo" minOccurs="0" type="ax25:CreditLineFacilityInfo" nillable="true"/>
+<xs:element name="id" minOccurs="0" type="xs:string" nillable="true"/>
+<xs:element name="issueBankInfo" minOccurs="0" type="ax25:IssueBankInfo" nillable="true"/>
+<xs:element name="password" minOccurs="0" type="xs:string" nillable="true"/>
+<xs:element name="supplierInfo" minOccurs="0" type="ax25:SupplierInfo" nillable="true"/>
+<xs:element name="tenderRefName" minOccurs="0" type="xs:string" nillable="true"/>
+<xs:element name="tenderRefNumber" minOccurs="0" type="xs:string" nillable="true"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="CreditLineFacilityInfo">
+<xs:sequence>
+<xs:element name="accountNumber" minOccurs="0" type="xs:string" nillable="true"/>
+<xs:element name="amount" minOccurs="0" type="xs:string" nillable="true"/>
+<xs:element name="amountCharacter" minOccurs="0" type="xs:string" nillable="true"/>
+<xs:element name="creditLineNumber" minOccurs="0" type="xs:string" nillable="true"/>
+<xs:element name="fromDate" minOccurs="0" type="xs:string" nillable="true"/>
+<xs:element name="toDate" minOccurs="0" type="xs:string" nillable="true"/>
+<xs:element name="unit" minOccurs="0" type="xs:string" nillable="true"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="CreditLineFacilityResponse">
+<xs:sequence>
+<xs:element name="resultCode" minOccurs="0" type="xs:string" nillable="true"/>
+<xs:element name="resultMessage" minOccurs="0" type="xs:string" nillable="true"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="BidSecurityInfoRequest">
+<xs:sequence>
+<xs:element name="bidSecurityInfo" minOccurs="0" type="ax25:BidSecurityInfo" nillable="true"/>
+<xs:element name="id" minOccurs="0" type="xs:string" nillable="true"/>
+<xs:element name="issueBankInfo" minOccurs="0" type="ax25:IssueBankInfo" nillable="true"/>
+<xs:element name="password" minOccurs="0" type="xs:string" nillable="true"/>
+<xs:element name="supplierInfo" minOccurs="0" type="ax25:SupplierInfo" nillable="true"/>
+<xs:element name="tenderNotificationInfo" minOccurs="0" type="ax25:TenderNotificationInfo" nillable="true"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="BidSecurityInfo">
+<xs:sequence>
+<xs:element name="amount" minOccurs="0" type="xs:string" nillable="true"/>
+<xs:element name="amountCharacter" minOccurs="0" type="xs:string" nillable="true"/>
+<xs:element name="expireDate" minOccurs="0" type="xs:string" nillable="true"/>
+<xs:element name="securityName" minOccurs="0" type="xs:string" nillable="true"/>
+<xs:element name="securityNumber" minOccurs="0" type="xs:string" nillable="true"/>
+<xs:element name="startDate" minOccurs="0" type="xs:string" nillable="true"/>
+<xs:element name="status" minOccurs="0" type="xs:string" nillable="true"/>
+<xs:element name="unit" minOccurs="0" type="xs:string" nillable="true"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="TenderNotificationInfo">
+<xs:sequence>
+<xs:element name="tenderLotName" minOccurs="0" type="xs:string" nillable="true"/>
+<xs:element name="tenderLotNumber" minOccurs="0" type="xs:string" nillable="true"/>
+<xs:element name="tenderRefName" minOccurs="0" type="xs:string" nillable="true"/>
+<xs:element name="tenderRefNumber" minOccurs="0" type="xs:string" nillable="true"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="BidSecurityInfoResponse">
+<xs:sequence>
+<xs:element name="resultCode" minOccurs="0" type="xs:string" nillable="true"/>
+<xs:element name="resultMessage" minOccurs="0" type="xs:string" nillable="true"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="PerformanceSecurityInfoRequest">
+<xs:sequence>
+<xs:element name="contractInfo" minOccurs="0" type="ax25:ContractInfo" nillable="true"/>
+<xs:element name="id" minOccurs="0" type="xs:string" nillable="true"/>
+<xs:element name="issueBankInfo" minOccurs="0" type="ax25:IssueBankInfo" nillable="true"/>
+<xs:element name="password" minOccurs="0" type="xs:string" nillable="true"/>
+<xs:element name="performanceSecurityInfo" minOccurs="0" type="ax25:PerformanceSecurityInfo" nillable="true"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="ContractInfo">
+<xs:sequence>
+<xs:element name="address" minOccurs="0" type="xs:string" nillable="true"/>
+<xs:element name="cellPhoneNumber" minOccurs="0" type="xs:string" nillable="true"/>
+<xs:element name="contractDate" minOccurs="0" type="xs:string" nillable="true"/>
+<xs:element name="contractName" minOccurs="0" type="xs:string" nillable="true"/>
+<xs:element name="contractNumber" minOccurs="0" type="xs:string" nillable="true"/>
+<xs:element name="contractSerialNumber" minOccurs="0" type="xs:string" nillable="true"/>
+<xs:element name="eMailAddress" minOccurs="0" type="xs:string" nillable="true"/>
+<xs:element name="lotInfo" maxOccurs="unbounded" minOccurs="0" type="ax25:LOTInfo" nillable="true"/>
+<xs:element name="pEName" minOccurs="0" type="xs:string" nillable="true"/>
+<xs:element name="pETINNumber" minOccurs="0" type="xs:string" nillable="true"/>
+<xs:element name="supplierName" minOccurs="0" type="xs:string" nillable="true"/>
+<xs:element name="supplierTINNumber" minOccurs="0" type="xs:string" nillable="true"/>
+<xs:element name="tenderRefName" minOccurs="0" type="xs:string" nillable="true"/>
+<xs:element name="tenderRefNumber" minOccurs="0" type="xs:string" nillable="true"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="LOTInfo">
+<xs:sequence>
+<xs:element name="lotName" minOccurs="0" type="xs:string" nillable="true"/>
+<xs:element name="lotNumber" minOccurs="0" type="xs:string" nillable="true"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="PerformanceSecurityInfo">
+<xs:sequence>
+<xs:element name="amount" minOccurs="0" type="xs:string" nillable="true"/>
+<xs:element name="amountCharacter" minOccurs="0" type="xs:string" nillable="true"/>
+<xs:element name="expireDate" minOccurs="0" type="xs:string" nillable="true"/>
+<xs:element name="securityName" minOccurs="0" type="xs:string" nillable="true"/>
+<xs:element name="securityNumber" minOccurs="0" type="xs:string" nillable="true"/>
+<xs:element name="startDate" minOccurs="0" type="xs:string" nillable="true"/>
+<xs:element name="status" minOccurs="0" type="xs:string" nillable="true"/>
+<xs:element name="unit" minOccurs="0" type="xs:string" nillable="true"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="PerformanceSecurityInfoResponse">
+<xs:sequence>
+<xs:element name="resultCode" minOccurs="0" type="xs:string" nillable="true"/>
+<xs:element name="resultMessage" minOccurs="0" type="xs:string" nillable="true"/>
+</xs:sequence>
+</xs:complexType>
+</xs:schema>
+<xs:schema targetNamespace="http://bank.vo.hub.roneps.minecofin.rw/xsd" attributeFormDefault="qualified" elementFormDefault="qualified">
+<xs:complexType name="ContractInfoRequest">
+<xs:sequence>
+<xs:element name="contractName" minOccurs="0" type="xs:string" nillable="true"/>
+<xs:element name="contractNumber" minOccurs="0" type="xs:string" nillable="true"/>
+<xs:element name="contractSerialNumber" minOccurs="0" type="xs:string" nillable="true"/>
+<xs:element name="id" minOccurs="0" type="xs:string" nillable="true"/>
+<xs:element name="password" minOccurs="0" type="xs:string" nillable="true"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="ContractInfoResponse">
+<xs:sequence>
+<xs:element name="contractInfo" maxOccurs="unbounded" minOccurs="0" type="ax23:ContractInfo" nillable="true"/>
+<xs:element name="resultCode" minOccurs="0" type="xs:string" nillable="true"/>
+<xs:element name="resultMessage" minOccurs="0" type="xs:string" nillable="true"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="ContractInfo">
+<xs:sequence>
+<xs:element name="address" minOccurs="0" type="xs:string" nillable="true"/>
+<xs:element name="cellPhoneNumber" minOccurs="0" type="xs:string" nillable="true"/>
+<xs:element name="contractAmount" minOccurs="0" type="xs:string" nillable="true"/>
+<xs:element name="contractAmountCharacter" minOccurs="0" type="xs:string" nillable="true"/>
+<xs:element name="contractDate" minOccurs="0" type="xs:string" nillable="true"/>
+<xs:element name="contractDurationDay" minOccurs="0" type="xs:string" nillable="true"/>
+<xs:element name="contractDurationMonth" minOccurs="0" type="xs:string" nillable="true"/>
+<xs:element name="contractDurationYear" minOccurs="0" type="xs:string" nillable="true"/>
+<xs:element name="contractManagerName" minOccurs="0" type="xs:string" nillable="true"/>
+<xs:element name="contractManagerPosition" minOccurs="0" type="xs:string" nillable="true"/>
+<xs:element name="contractName" minOccurs="0" type="xs:string" nillable="true"/>
+<xs:element name="contractNumber" minOccurs="0" type="xs:string" nillable="true"/>
+<xs:element name="contractSerialNumber" minOccurs="0" type="xs:string" nillable="true"/>
+<xs:element name="currency" minOccurs="0" type="xs:string" nillable="true"/>
+<xs:element name="eMailAddress" minOccurs="0" type="xs:string" nillable="true"/>
+<xs:element name="effectiveDate" minOccurs="0" type="xs:string" nillable="true"/>
+<xs:element name="lotInfo" maxOccurs="unbounded" minOccurs="0" type="ax23:LOTInfo" nillable="true"/>
+<xs:element name="pEAddress" minOccurs="0" type="xs:string" nillable="true"/>
+<xs:element name="pEName" minOccurs="0" type="xs:string" nillable="true"/>
+<xs:element name="pERepresentativeName" minOccurs="0" type="xs:string" nillable="true"/>
+<xs:element name="pETELNumber" minOccurs="0" type="xs:string" nillable="true"/>
+<xs:element name="pETINNumber" minOccurs="0" type="xs:string" nillable="true"/>
+<xs:element name="penaltyDelayRate" minOccurs="0" type="xs:string" nillable="true"/>
+<xs:element name="penaltyLimitRate" minOccurs="0" type="xs:string" nillable="true"/>
+<xs:element name="poBox" minOccurs="0" type="xs:string" nillable="true"/>
+<xs:element name="supervisingFirm" minOccurs="0" type="xs:string" nillable="true"/>
+<xs:element name="supplierName" minOccurs="0" type="xs:string" nillable="true"/>
+<xs:element name="supplierTINNumber" minOccurs="0" type="xs:string" nillable="true"/>
+<xs:element name="telNumber" minOccurs="0" type="xs:string" nillable="true"/>
+<xs:element name="tenderRefName" minOccurs="0" type="xs:string" nillable="true"/>
+<xs:element name="tenderRefNumber" minOccurs="0" type="xs:string" nillable="true"/>
+<xs:element name="totalTaxeAmount" minOccurs="0" type="xs:string" nillable="true"/>
+<xs:element name="totalTaxeAmountCharacter" minOccurs="0" type="xs:string" nillable="true"/>
+<xs:element name="vatAmount" minOccurs="0" type="xs:string" nillable="true"/>
+<xs:element name="vatRate" minOccurs="0" type="xs:string" nillable="true"/>
+<xs:element name="warantyMonth" minOccurs="0" type="xs:string" nillable="true"/>
+<xs:element name="warantyYear" minOccurs="0" type="xs:string" nillable="true"/>
+<xs:element name="whtAmount" minOccurs="0" type="xs:string" nillable="true"/>
+<xs:element name="whtRate" minOccurs="0" type="xs:string" nillable="true"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="LOTInfo">
+<xs:sequence>
+<xs:element name="lotAmount" minOccurs="0" type="xs:string" nillable="true"/>
+<xs:element name="lotName" minOccurs="0" type="xs:string" nillable="true"/>
+<xs:element name="lotNumber" minOccurs="0" type="xs:string" nillable="true"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="TenderInfoRequest">
+<xs:sequence>
+<xs:element name="id" minOccurs="0" type="xs:string" nillable="true"/>
+<xs:element name="password" minOccurs="0" type="xs:string" nillable="true"/>
+<xs:element name="tenderRefName" minOccurs="0" type="xs:string" nillable="true"/>
+<xs:element name="tenderRefNumber" minOccurs="0" type="xs:string" nillable="true"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="TenderInfoResponse">
+<xs:sequence>
+<xs:element name="resultCode" minOccurs="0" type="xs:string" nillable="true"/>
+<xs:element name="resultMessage" minOccurs="0" type="xs:string" nillable="true"/>
+<xs:element name="tenderNotificationInfo" maxOccurs="unbounded" minOccurs="0" type="ax23:TenderNotificationInfo" nillable="true"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="TenderNotificationInfo">
+<xs:sequence>
+<xs:element name="PECode" minOccurs="0" type="xs:string" nillable="true"/>
+<xs:element name="PEName" minOccurs="0" type="xs:string" nillable="true"/>
+<xs:element name="deadLineDate" minOccurs="0" type="xs:string" nillable="true"/>
+<xs:element name="onOff" minOccurs="0" type="xs:string" nillable="true"/>
+<xs:element name="openDate" minOccurs="0" type="xs:string" nillable="true"/>
+<xs:element name="publicDate" minOccurs="0" type="xs:string" nillable="true"/>
+<xs:element name="receiveDate" minOccurs="0" type="xs:string" nillable="true"/>
+<xs:element name="tenderLOTInfo" maxOccurs="unbounded" minOccurs="0" type="ax23:TenderLOTInfo" nillable="true"/>
+<xs:element name="tenderMethod" minOccurs="0" type="xs:string" nillable="true"/>
+<xs:element name="tenderRefName" minOccurs="0" type="xs:string" nillable="true"/>
+<xs:element name="tenderRefNumber" minOccurs="0" type="xs:string" nillable="true"/>
+<xs:element name="tenderType" minOccurs="0" type="xs:string" nillable="true"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="TenderLOTInfo">
+<xs:sequence>
+<xs:element name="amount" minOccurs="0" type="xs:string" nillable="true"/>
+<xs:element name="tenderLotDesc" minOccurs="0" type="xs:string" nillable="true"/>
+<xs:element name="tenderLotName" minOccurs="0" type="xs:string" nillable="true"/>
+<xs:element name="tenderLotNumber" minOccurs="0" type="xs:string" nillable="true"/>
+<xs:element name="unit" minOccurs="0" type="xs:string" nillable="true"/>
+</xs:sequence>
+</xs:complexType>
+</xs:schema>
+<xs:schema xmlns:ax24="http://bank.vo.hub.roneps.minecofin.rw/xsd" xmlns:ax26="http://security.vo.hub.roneps.minecofin.rw/xsd" targetNamespace="http://security.service.hub.roneps.minecofin.rw" attributeFormDefault="qualified" elementFormDefault="qualified">
+<xs:import namespace="http://bank.vo.hub.roneps.minecofin.rw/xsd"/>
+<xs:import namespace="http://security.vo.hub.roneps.minecofin.rw/xsd"/>
+<xs:element name="getContractInformation">
+<xs:complexType>
+<xs:sequence>
+<xs:element name="contractInfoRequest" minOccurs="0" type="ax23:ContractInfoRequest" nillable="true"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="getContractInformationResponse">
+<xs:complexType>
+<xs:sequence>
+<xs:element name="return" minOccurs="0" type="ax23:ContractInfoResponse" nillable="true"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="getTenderInformation">
+<xs:complexType>
+<xs:sequence>
+<xs:element name="tenderInfoRequest" minOccurs="0" type="ax23:TenderInfoRequest" nillable="true"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="getTenderInformationResponse">
+<xs:complexType>
+<xs:sequence>
+<xs:element name="return" minOccurs="0" type="ax23:TenderInfoResponse" nillable="true"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="sendAdvancePaymentInformation">
+<xs:complexType>
+<xs:sequence>
+<xs:element name="advancePaymentInfoRequest" minOccurs="0" type="ax25:AdvancePaymentInfoRequest" nillable="true"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="sendAdvancePaymentInformationResponse">
+<xs:complexType>
+<xs:sequence>
+<xs:element name="return" minOccurs="0" type="ax25:AdvancePaymentInfoResponse" nillable="true"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="sendCreditLineFacility">
+<xs:complexType>
+<xs:sequence>
+<xs:element name="creditLineFacilityRequest" minOccurs="0" type="ax25:CreditLineFacilityRequest" nillable="true"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="sendCreditLineFacilityResponse">
+<xs:complexType>
+<xs:sequence>
+<xs:element name="return" minOccurs="0" type="ax25:CreditLineFacilityResponse" nillable="true"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="sendBidSecurityInformation">
+<xs:complexType>
+<xs:sequence>
+<xs:element name="bidSecurityInfoRequest" minOccurs="0" type="ax25:BidSecurityInfoRequest" nillable="true"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="sendBidSecurityInformationResponse">
+<xs:complexType>
+<xs:sequence>
+<xs:element name="return" minOccurs="0" type="ax25:BidSecurityInfoResponse" nillable="true"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="sendPerformSecurityInformation">
+<xs:complexType>
+<xs:sequence>
+<xs:element name="performanceSecurityInfoRequest" minOccurs="0" type="ax25:PerformanceSecurityInfoRequest" nillable="true"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="sendPerformSecurityInformationResponse">
+<xs:complexType>
+<xs:sequence>
+<xs:element name="return" minOccurs="0" type="ax25:PerformanceSecurityInfoResponse" nillable="true"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+</xs:schema>
+</wsdl:types>
+<wsdl:message name="getTenderInformationRequest">
+<wsdl:part name="parameters" element="ns:getTenderInformation"/>
+</wsdl:message>
+<wsdl:message name="getTenderInformationResponse">
+<wsdl:part name="parameters" element="ns:getTenderInformationResponse"/>
+</wsdl:message>
+<wsdl:message name="sendAdvancePaymentInformationRequest">
+<wsdl:part name="parameters" element="ns:sendAdvancePaymentInformation"/>
+</wsdl:message>
+<wsdl:message name="sendAdvancePaymentInformationResponse">
+<wsdl:part name="parameters" element="ns:sendAdvancePaymentInformationResponse"/>
+</wsdl:message>
+<wsdl:message name="sendBidSecurityInformationRequest">
+<wsdl:part name="parameters" element="ns:sendBidSecurityInformation"/>
+</wsdl:message>
+<wsdl:message name="sendBidSecurityInformationResponse">
+<wsdl:part name="parameters" element="ns:sendBidSecurityInformationResponse"/>
+</wsdl:message>
+<wsdl:message name="getContractInformationRequest">
+<wsdl:part name="parameters" element="ns:getContractInformation"/>
+</wsdl:message>
+<wsdl:message name="getContractInformationResponse">
+<wsdl:part name="parameters" element="ns:getContractInformationResponse"/>
+</wsdl:message>
+<wsdl:message name="sendCreditLineFacilityRequest">
+<wsdl:part name="parameters" element="ns:sendCreditLineFacility"/>
+</wsdl:message>
+<wsdl:message name="sendCreditLineFacilityResponse">
+<wsdl:part name="parameters" element="ns:sendCreditLineFacilityResponse"/>
+</wsdl:message>
+<wsdl:message name="sendPerformSecurityInformationRequest">
+<wsdl:part name="parameters" element="ns:sendPerformSecurityInformation"/>
+</wsdl:message>
+<wsdl:message name="sendPerformSecurityInformationResponse">
+<wsdl:part name="parameters" element="ns:sendPerformSecurityInformationResponse"/>
+</wsdl:message>
+<wsdl:portType name="GuaranteeDocumentServicePortType">
+<wsdl:operation name="getTenderInformation">
+<wsdl:input message="ns:getTenderInformationRequest" wsaw:Action="urn:getTenderInformation"/>
+<wsdl:output message="ns:getTenderInformationResponse" wsaw:Action="urn:getTenderInformationResponse"/>
+</wsdl:operation>
+<wsdl:operation name="sendAdvancePaymentInformation">
+<wsdl:input message="ns:sendAdvancePaymentInformationRequest" wsaw:Action="urn:sendAdvancePaymentInformation"/>
+<wsdl:output message="ns:sendAdvancePaymentInformationResponse" wsaw:Action="urn:sendAdvancePaymentInformationResponse"/>
+</wsdl:operation>
+<wsdl:operation name="sendBidSecurityInformation">
+<wsdl:input message="ns:sendBidSecurityInformationRequest" wsaw:Action="urn:sendBidSecurityInformation"/>
+<wsdl:output message="ns:sendBidSecurityInformationResponse" wsaw:Action="urn:sendBidSecurityInformationResponse"/>
+</wsdl:operation>
+<wsdl:operation name="getContractInformation">
+<wsdl:input message="ns:getContractInformationRequest" wsaw:Action="urn:getContractInformation"/>
+<wsdl:output message="ns:getContractInformationResponse" wsaw:Action="urn:getContractInformationResponse"/>
+</wsdl:operation>
+<wsdl:operation name="sendCreditLineFacility">
+<wsdl:input message="ns:sendCreditLineFacilityRequest" wsaw:Action="urn:sendCreditLineFacility"/>
+<wsdl:output message="ns:sendCreditLineFacilityResponse" wsaw:Action="urn:sendCreditLineFacilityResponse"/>
+</wsdl:operation>
+<wsdl:operation name="sendPerformSecurityInformation">
+<wsdl:input message="ns:sendPerformSecurityInformationRequest" wsaw:Action="urn:sendPerformSecurityInformation"/>
+<wsdl:output message="ns:sendPerformSecurityInformationResponse" wsaw:Action="urn:sendPerformSecurityInformationResponse"/>
+</wsdl:operation>
+</wsdl:portType>
+<wsdl:binding name="GuaranteeDocumentServiceSoap11Binding" type="ns:GuaranteeDocumentServicePortType">
+<soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+<wsdl:operation name="getTenderInformation">
+<soap:operation soapAction="urn:getTenderInformation" style="document"/>
+<wsdl:input>
+<soap:body use="literal"/>
+</wsdl:input>
+<wsdl:output>
+<soap:body use="literal"/>
+</wsdl:output>
+</wsdl:operation>
+<wsdl:operation name="sendAdvancePaymentInformation">
+<soap:operation soapAction="urn:sendAdvancePaymentInformation" style="document"/>
+<wsdl:input>
+<soap:body use="literal"/>
+</wsdl:input>
+<wsdl:output>
+<soap:body use="literal"/>
+</wsdl:output>
+</wsdl:operation>
+<wsdl:operation name="sendBidSecurityInformation">
+<soap:operation soapAction="urn:sendBidSecurityInformation" style="document"/>
+<wsdl:input>
+<soap:body use="literal"/>
+</wsdl:input>
+<wsdl:output>
+<soap:body use="literal"/>
+</wsdl:output>
+</wsdl:operation>
+<wsdl:operation name="getContractInformation">
+<soap:operation soapAction="urn:getContractInformation" style="document"/>
+<wsdl:input>
+<soap:body use="literal"/>
+</wsdl:input>
+<wsdl:output>
+<soap:body use="literal"/>
+</wsdl:output>
+</wsdl:operation>
+<wsdl:operation name="sendCreditLineFacility">
+<soap:operation soapAction="urn:sendCreditLineFacility" style="document"/>
+<wsdl:input>
+<soap:body use="literal"/>
+</wsdl:input>
+<wsdl:output>
+<soap:body use="literal"/>
+</wsdl:output>
+</wsdl:operation>
+<wsdl:operation name="sendPerformSecurityInformation">
+<soap:operation soapAction="urn:sendPerformSecurityInformation" style="document"/>
+<wsdl:input>
+<soap:body use="literal"/>
+</wsdl:input>
+<wsdl:output>
+<soap:body use="literal"/>
+</wsdl:output>
+</wsdl:operation>
+</wsdl:binding>
+<wsdl:binding name="GuaranteeDocumentServiceSoap12Binding" type="ns:GuaranteeDocumentServicePortType">
+<soap12:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+<wsdl:operation name="getTenderInformation">
+<soap12:operation soapAction="urn:getTenderInformation" style="document"/>
+<wsdl:input>
+<soap12:body use="literal"/>
+</wsdl:input>
+<wsdl:output>
+<soap12:body use="literal"/>
+</wsdl:output>
+</wsdl:operation>
+<wsdl:operation name="sendAdvancePaymentInformation">
+<soap12:operation soapAction="urn:sendAdvancePaymentInformation" style="document"/>
+<wsdl:input>
+<soap12:body use="literal"/>
+</wsdl:input>
+<wsdl:output>
+<soap12:body use="literal"/>
+</wsdl:output>
+</wsdl:operation>
+<wsdl:operation name="sendBidSecurityInformation">
+<soap12:operation soapAction="urn:sendBidSecurityInformation" style="document"/>
+<wsdl:input>
+<soap12:body use="literal"/>
+</wsdl:input>
+<wsdl:output>
+<soap12:body use="literal"/>
+</wsdl:output>
+</wsdl:operation>
+<wsdl:operation name="getContractInformation">
+<soap12:operation soapAction="urn:getContractInformation" style="document"/>
+<wsdl:input>
+<soap12:body use="literal"/>
+</wsdl:input>
+<wsdl:output>
+<soap12:body use="literal"/>
+</wsdl:output>
+</wsdl:operation>
+<wsdl:operation name="sendCreditLineFacility">
+<soap12:operation soapAction="urn:sendCreditLineFacility" style="document"/>
+<wsdl:input>
+<soap12:body use="literal"/>
+</wsdl:input>
+<wsdl:output>
+<soap12:body use="literal"/>
+</wsdl:output>
+</wsdl:operation>
+<wsdl:operation name="sendPerformSecurityInformation">
+<soap12:operation soapAction="urn:sendPerformSecurityInformation" style="document"/>
+<wsdl:input>
+<soap12:body use="literal"/>
+</wsdl:input>
+<wsdl:output>
+<soap12:body use="literal"/>
+</wsdl:output>
+</wsdl:operation>
+</wsdl:binding>
+<wsdl:binding name="GuaranteeDocumentServiceHttpBinding" type="ns:GuaranteeDocumentServicePortType">
+<http:binding verb="POST"/>
+<wsdl:operation name="getTenderInformation">
+<http:operation location="GuaranteeDocumentService/getTenderInformation"/>
+<wsdl:input>
+<mime:content type="text/xml" part="getTenderInformation"/>
+</wsdl:input>
+<wsdl:output>
+<mime:content type="text/xml" part="getTenderInformation"/>
+</wsdl:output>
+</wsdl:operation>
+<wsdl:operation name="sendAdvancePaymentInformation">
+<http:operation location="GuaranteeDocumentService/sendAdvancePaymentInformation"/>
+<wsdl:input>
+<mime:content type="text/xml" part="sendAdvancePaymentInformation"/>
+</wsdl:input>
+<wsdl:output>
+<mime:content type="text/xml" part="sendAdvancePaymentInformation"/>
+</wsdl:output>
+</wsdl:operation>
+<wsdl:operation name="sendBidSecurityInformation">
+<http:operation location="GuaranteeDocumentService/sendBidSecurityInformation"/>
+<wsdl:input>
+<mime:content type="text/xml" part="sendBidSecurityInformation"/>
+</wsdl:input>
+<wsdl:output>
+<mime:content type="text/xml" part="sendBidSecurityInformation"/>
+</wsdl:output>
+</wsdl:operation>
+<wsdl:operation name="getContractInformation">
+<http:operation location="GuaranteeDocumentService/getContractInformation"/>
+<wsdl:input>
+<mime:content type="text/xml" part="getContractInformation"/>
+</wsdl:input>
+<wsdl:output>
+<mime:content type="text/xml" part="getContractInformation"/>
+</wsdl:output>
+</wsdl:operation>
+<wsdl:operation name="sendCreditLineFacility">
+<http:operation location="GuaranteeDocumentService/sendCreditLineFacility"/>
+<wsdl:input>
+<mime:content type="text/xml" part="sendCreditLineFacility"/>
+</wsdl:input>
+<wsdl:output>
+<mime:content type="text/xml" part="sendCreditLineFacility"/>
+</wsdl:output>
+</wsdl:operation>
+<wsdl:operation name="sendPerformSecurityInformation">
+<http:operation location="GuaranteeDocumentService/sendPerformSecurityInformation"/>
+<wsdl:input>
+<mime:content type="text/xml" part="sendPerformSecurityInformation"/>
+</wsdl:input>
+<wsdl:output>
+<mime:content type="text/xml" part="sendPerformSecurityInformation"/>
+</wsdl:output>
+</wsdl:operation>
+</wsdl:binding>
+<wsdl:service name="GuaranteeDocumentService">
+<wsdl:port name="GuaranteeDocumentServiceHttpSoap11Endpoint" binding="ns:GuaranteeDocumentServiceSoap11Binding">
+<soap:address location="http://197.243.18.138:8084/roneps-hub/services/GuaranteeDocumentService.GuaranteeDocumentServiceHttpSoap11Endpoint/"/>
+</wsdl:port>
+<wsdl:port name="GuaranteeDocumentServiceHttpSoap12Endpoint" binding="ns:GuaranteeDocumentServiceSoap12Binding">
+<soap12:address location="http://197.243.18.138:8084/roneps-hub/services/GuaranteeDocumentService.GuaranteeDocumentServiceHttpSoap12Endpoint/"/>
+</wsdl:port>
+<wsdl:port name="GuaranteeDocumentServiceHttpEndpoint" binding="ns:GuaranteeDocumentServiceHttpBinding">
+<http:address location="http://197.243.18.138:8084/roneps-hub/services/GuaranteeDocumentService.GuaranteeDocumentServiceHttpEndpoint/"/>
+</wsdl:port>
+</wsdl:service>
+</wsdl:definitions>

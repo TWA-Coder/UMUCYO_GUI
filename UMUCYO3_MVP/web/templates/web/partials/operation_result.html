@@ -1,0 +1,15 @@
+<div class="alert alert-{% if error %}danger{% else %}success{% endif %} mt-3">
+    {% if error %}
+    <strong>Error:</strong> {{ error }}
+    {% else %}
+    <strong>Success!</strong> Operation executed.
+    {% endif %}
+</div>
+
+{% if result %}
+<div class="card bg-light">
+    <div class="card-body">
+        <pre><code>{{ result }}</code></pre>
+    </div>
+</div>
+{% endif %}

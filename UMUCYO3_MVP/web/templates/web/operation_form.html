@@ -1,0 +1,67 @@
+{% extends 'web/base.html' %}
+
+{% block title %}Execute {{ operation }} - Umucyo MVP{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h1 class="h2">Execute: {{ operation }}</h1>
+    <a href="{% url 'operation_list' %}" class="btn btn-secondary btn-sm">Back</a>
+</div>
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">Input Parameters</h6>
+            </div>
+            <div class="card-body">
+                <form hx-post="{% url 'operation_execute' operation %}" hx-target="#result-container"
+                    hx-indicator="#loading">
+                    {% csrf_token %}
+
+                    <div class="mb-3">
+                        <label class="form-label">ID (PE Code/ID)</label>
+                        <input type="text" name="id" class="form-control" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Password</label>
+                        <input type="password" name="password" class="form-control" required>
+                    </div>
+
+                    <hr>
+                    <h6 class="text-muted">Operation Specifics</h6>
+
+                    {% for field in fields %}
+                    <div class="mb-3">
+                        <label class="form-label">{{ field.label }}</label>
+                        <input type="{{ field.type|default:'text' }}" name="{{ field.name }}" class="form-control" {% if
+                            field.required %}required{% endif %}>
+                        {% if field.help_text %}<small class="text-muted">{{ field.help_text }}</small>{% endif %}
+                    </div>
+                    {% endfor %}
+
+                    <button type="submit" class="btn btn-primary w-100 mt-3">Execute Operation</button>
+                    <div id="loading" class="htmx-indicator text-center mt-2">
+                        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                        Processing...
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">Result</h6>
+            </div>
+            <div class="card-body" id="result-container">
+                <p class="text-muted text-center py-5">
+                    Results will appear here after execution.
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
