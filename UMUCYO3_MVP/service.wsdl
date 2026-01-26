@@ -617,13 +617,13 @@
 </wsdl:binding>
 <wsdl:service name="GuaranteeDocumentService">
 <wsdl:port name="GuaranteeDocumentServiceHttpSoap11Endpoint" binding="ns:GuaranteeDocumentServiceSoap11Binding">
-<soap:address location="http://197.243.18.138:8084/roneps-hub/services/GuaranteeDocumentService.GuaranteeDocumentServiceHttpSoap11Endpoint/"/>
+<soap:address location="http://umucyo.gov.rw:8084/roneps-hub/services/GuaranteeDocumentService.GuaranteeDocumentServiceHttpSoap11Endpoint/"/>
 </wsdl:port>
 <wsdl:port name="GuaranteeDocumentServiceHttpSoap12Endpoint" binding="ns:GuaranteeDocumentServiceSoap12Binding">
-<soap12:address location="http://197.243.18.138:8084/roneps-hub/services/GuaranteeDocumentService.GuaranteeDocumentServiceHttpSoap12Endpoint/"/>
+<soap12:address location="http://umucyo.gov.rw:8084/roneps-hub/services/GuaranteeDocumentService.GuaranteeDocumentServiceHttpSoap12Endpoint/"/>
 </wsdl:port>
 <wsdl:port name="GuaranteeDocumentServiceHttpEndpoint" binding="ns:GuaranteeDocumentServiceHttpBinding">
-<http:address location="http://197.243.18.138:8084/roneps-hub/services/GuaranteeDocumentService.GuaranteeDocumentServiceHttpEndpoint/"/>
+<http:address location="http://umucyo.gov.rw:8084/roneps-hub/services/GuaranteeDocumentService.GuaranteeDocumentServiceHttpEndpoint/"/>
 </wsdl:port>
 </wsdl:service>
 </wsdl:definitions>

@@ -19,24 +19,14 @@
                     hx-indicator="#loading">
                     {% csrf_token %}
 
-                    <div class="mb-3">
-                        <label class="form-label">ID (PE Code/ID)</label>
-                        <input type="text" name="id" class="form-control" required>
-                    </div>
-
-                    <div class="mb-3">
-                        <label class="form-label">Password</label>
-                        <input type="password" name="password" class="form-control" required>
-                    </div>
-
                     <hr>
                     <h6 class="text-muted">Operation Specifics</h6>
 
                     {% for field in fields %}
                     <div class="mb-3">
                         <label class="form-label">{{ field.label }}</label>
-                        <input type="{{ field.type|default:'text' }}" name="{{ field.name }}" class="form-control" {% if
-                            field.required %}required{% endif %}>
+                        <input type="{{ field.type|default:'text' }}" name="{{ field.name }}" class="form-control"
+                            required>
                         {% if field.help_text %}<small class="text-muted">{{ field.help_text }}</small>{% endif %}
                     </div>
                     {% endfor %}

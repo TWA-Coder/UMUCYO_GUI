@@ -1,28 +1,82 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Umucyo MVP{% endblock %}</title>
+    <link rel="icon" type="image/jpeg" href="{% static 'web/img/OldMutual_logo.jpeg' %}">
     <!-- Bootstrap for quick styling -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- HTMX -->
     <script src="https://unpkg.com/htmx.org@1.9.10"></script>
     <style>
-        body { background-color: #f8f9fa; }
-        .sidebar { min-height: 100vh; background: #fff; border-right: 1px solid #dee2e6; }
-        .nav-link.active { font-weight: bold; background-color: #e9ecef; }
-        .htmx-indicator { display: none; }
-        .htmx-request .htmx-indicator { display: inline; }
-        .htmx-request.htmx-indicator { display: inline; }
+        body {
+            background-color: #f0f7f4;
+        }
+
+        .sidebar {
+            min-height: 100vh;
+            background: #fff;
+            border-right: 1px solid #dee2e6;
+        }
+
+        .nav-link.active {
+            font-weight: bold;
+            background-color: #d1e7dd;
+            color: #0f5132 !important;
+        }
+
+        .navbar-dark.bg-dark {
+            background-color: #198754 !important;
+        }
+
+        /* Bootstrap Success Green */
+        .btn-primary {
+            background-color: #198754;
+            border-color: #198754;
+        }
+
+        .btn-primary:hover {
+            background-color: #157347;
+            border-color: #146c43;
+        }
+
+        .text-primary {
+            color: #198754 !important;
+        }
+
+        .card-header {
+            background-color: #d1e7dd;
+            color: #0f5132;
+            font-weight: bold;
+        }
+
+        .htmx-indicator {
+            display: none;
+        }
+
+        .htmx-request .htmx-indicator {
+            display: inline;
+        }
+
+        .htmx-request.htmx-indicator {
+            display: inline;
+        }
     </style>
     {% block extra_css %}{% endblock %}
 </head>
+
 <body>
     {% if user.is_authenticated %}
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
         <div class="container-fluid">
-            <a class="navbar-brand" href="{% url 'dashboard' %}">Umucyo MVP</a>
+            <a class="navbar-brand" href="{% url 'dashboard' %}">
+                <img src="{% static 'web/img/OldMutual_logo.jpeg' %}" alt="Logo" height="30"
+                    class="d-inline-block align-text-top me-2">
+                Umucyo MVP
+            </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -51,12 +105,12 @@
 
     <div class="container">
         {% if messages %}
-            {% for message in messages %}
-                <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
-                    {{ message }}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
-            {% endfor %}
+        {% for message in messages %}
+        <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+            {{ message }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        {% endfor %}
         {% endif %}
 
         {% block content %}{% endblock %}
@@ -70,4 +124,5 @@
     </script>
     {% block extra_js %}{% endblock %}
 </body>
+
 </html>
