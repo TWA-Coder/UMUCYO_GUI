@@ -8,7 +8,8 @@ from django.template.loader import render_to_string
 import json
 from zeep.helpers import serialize_object
 from services.soap_client import SoapClient
-from core.models import SoapRequestLog
+from core.models import SoapRequestLog, UserRole, Role
+from core.utils import user_has_role
 
 class CustomLoginView(LoginView):
     template_name = 'web/login.html'
@@ -323,7 +324,8 @@ class UserListView(LoginRequiredMixin, ListView):
 
     def get_queryset(self):
         # Only superusers should see this page typically, or check permissions
-        if not self.request.user.is_superuser:
+        # Only admins should see this page
+        if not user_has_role(self.request.user, ['admin']):
             return User.objects.none()
         return super().get_queryset()
 
@@ -336,6 +338,12 @@ class UserUpdateView(LoginRequiredMixin, UpdateView):
     fields = ['email', 'is_active', 'is_staff']
     template_name = 'web/user_form.html'
     success_url = reverse_lazy('user_list')
+    
+    def dispatch(self, request, *args, **kwargs):
+        if not user_has_role(request.user, ['admin']):
+             from django.core.exceptions import PermissionDenied
+             raise PermissionDenied
+        return super().dispatch(request, *args, **kwargs)
     
     def get_form(self, form_class=None):
         form = super().get_form(form_class)
@@ -376,10 +384,24 @@ class UserCreateView(LoginRequiredMixin, CreateView):
     success_url = reverse_lazy('user_list')
 
     def dispatch(self, request, *args, **kwargs):
-        if not request.user.is_superuser:
+        if not user_has_role(request.user, ['admin']):
             from django.core.exceptions import PermissionDenied
             raise PermissionDenied
         return super().dispatch(request, *args, **kwargs)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['all_roles'] = Role.objects.all()
+        return context
+
+    def form_valid(self, form):
+        response = super().form_valid(form)
+        # Create roles
+        role_ids = self.request.POST.getlist('roles')
+        for rid in set(role_ids):
+            if rid:
+                UserRole.objects.create(user=self.object, role_id=rid)
+        return response
 
 class TestSingleSoapView(View):
     def get(self, request):
