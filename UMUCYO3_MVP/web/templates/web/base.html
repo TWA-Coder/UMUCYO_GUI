@@ -88,7 +88,8 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'operation_list' %}">Operations</a>
                     </li>
-                    {% if user.is_superuser %}
+                    {% load core_tags %}
+                    {% if user|has_role:'admin' %}
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'user_list' %}">Users & Roles</a>
                     </li>
