@@ -123,7 +123,7 @@ class SoapClient:
     def call_operation(self, operation_name: str, user=None, **kwargs) -> Any:
         # --- MOCK OVERRIDE ---
         # Allow 'getTenderInformation' to pass through for testing
-        if getattr(settings, 'MOCK_SOAP_API', True) and operation_name != 'getTenderInformation':
+        if getattr(settings, 'MOCK_SOAP_API', True):
             start_time = time.time()
             mock_response = {
                 "status": "MOCK_SUCCESS",
