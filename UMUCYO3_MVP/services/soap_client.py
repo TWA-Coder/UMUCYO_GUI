@@ -68,36 +68,7 @@ class SoapClient:
         transport = Transport(session=session, timeout=SOAP_TIMEOUT)
         settings = Settings(strict=False, xml_huge_tree=True)
         
-        client = Client(self.wsdl_path, transport=transport, settings=settings, plugins=[self.history])
-        
-        # --- HARDCODE IP FIX ---
-        # Force use of IP address to bypass DNS failure on Render
-        new_address = 'http://197.243.17.15:8084/roneps-hub/services/GuaranteeDocumentService.GuaranteeDocumentServiceHttpSoap11Endpoint/'
-        if client.service:
-             # Zeep service objects proxy the binding. We need to set the address on the binding.
-             # This is a bit internal to Zeep but effective.
-             # Standard way: client.create_service(binding_name, address)
-             pass 
-
-        # A more robust way in Zeep involves creating a new service proxy with the specific address
-        # But since we use the default service, we can just patch the transport/wsdl or create service explicitly.
-        
-        # Let's use the create_service method if we know the binding name from WSDL.
-        # From previous file view: Binding name is 'GuaranteeDocumentServiceSoap11Binding'
-        # PortType is GuaranteeDocumentServicePortType.
-        # Service name is GuaranteeDocumentService.
-        
-        binding_name = '{http://security.service.hub.roneps.minecofin.rw}GuaranteeDocumentServiceSoap11Binding'
-        service_name = '{http://security.service.hub.roneps.minecofin.rw}GuaranteeDocumentService'
-        
-        # However, the simplest way often acts on the default service. 
-        # let's try to overwrite the location which Zeep uses.
-        for service in client.wsdl.services.values():
-            for port in service.ports.values():
-                if 'umucyo.gov.rw' in port.binding_options.get('address', ''):
-                    port.binding_options['address'] = port.binding_options['address'].replace('umucyo.gov.rw', '197.243.17.15')
-                    
-        return client
+        return Client(self.wsdl_path, transport=transport, settings=settings, plugins=[self.history])
 
     def _log_request(self, operation: str, request_data: Dict, start_time: float, result=None, error=None, user=None):
         duration = time.time() - start_time

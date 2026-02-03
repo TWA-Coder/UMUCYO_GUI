@@ -158,7 +158,7 @@ REST_FRAMEWORK = {
 
 # CORS Configuration
 CORS_ALLOW_ALL_ORIGINS = True  # For MVP. Restrict in production.
-MOCK_SOAP_API = os.environ.get('MOCK_SOAP_API', 'False') == 'True'
+MOCK_SOAP_API = os.environ.get('MOCK_SOAP_API', 'True') == 'True'
 
 # Session Settings
 SESSION_COOKIE_AGE = 900  # 15 minutes in seconds
