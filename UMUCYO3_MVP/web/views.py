@@ -1,15 +1,20 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.views.generic import ListView, TemplateView, View
+from django.views.generic import ListView, TemplateView, View, UpdateView, CreateView
 from django.contrib.auth.views import LoginView
 from django.contrib.auth.models import User
 from django.http import HttpResponse
 from django.template.loader import render_to_string
+from django.urls import reverse_lazy
+from django.db import transaction
+from django.core.exceptions import PermissionDenied
 import json
+import openpyxl
 from zeep.helpers import serialize_object
 from services.soap_client import SoapClient
-from core.models import SoapRequestLog, UserRole, Role
+from core.models import SoapRequestLog, UserRole, Role, RoleOperation
 from core.utils import user_has_role
+from .forms_custom import CustomUserCreationForm
 
 class CustomLoginView(LoginView):
     template_name = 'web/login.html'
@@ -20,6 +25,56 @@ class DashboardView(LoginRequiredMixin, ListView):
     context_object_name = 'logs'
     ordering = ['-timestamp']
     paginate_by = 20
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        # Add summary stats if needed, or just keep it simple
+        return context
+
+class ExportReadLogsExcelView(LoginRequiredMixin, View):
+    def dispatch(self, request, *args, **kwargs):
+        if not user_has_role(request.user, ['Admin', 'Manager']):
+             raise PermissionDenied
+        return super().dispatch(request, *args, **kwargs)
+
+    def get(self, request, *args, **kwargs):
+        # Create a workbook and select the active worksheet
+        wb = openpyxl.Workbook()
+        ws = wb.active
+        ws.title = "SOAP Logs"
+
+        # Define headers
+        headers = ['ID', 'User', 'Operation', 'Status', 'Duration (s)', 'Timestamp', 'Error Message']
+        ws.append(headers)
+
+        # Fetch data
+        logs = SoapRequestLog.objects.all().order_by('-timestamp')
+
+        # Write data rows
+        for log in logs:
+            username = log.user.username if log.user else 'System/Unknown'
+            # Remove any timezone info for Excel compatibility if needed, or convert to string
+            timestamp_str = log.timestamp.strftime('%Y-%m-%d %H:%M:%S') if log.timestamp else ''
+            
+            row = [
+                log.id,
+                username,
+                log.operation,
+                log.status,
+                log.duration,
+                timestamp_str,
+                log.error_message or ''
+            ]
+            ws.append(row)
+
+        # Prepare response
+        response = HttpResponse(
+            content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+        )
+        response['Content-Disposition'] = 'attachment; filename="soap_logs_report.xlsx"'
+        
+        wb.save(response)
+        return response
 
 class OperationListView(LoginRequiredMixin, TemplateView):
     template_name = 'web/operation_list.html'
@@ -38,6 +93,11 @@ class OperationListView(LoginRequiredMixin, TemplateView):
 
 class OperationExecuteView(LoginRequiredMixin, View):
     template_name = 'web/operation_form.html'
+    
+    def dispatch(self, request, *args, **kwargs):
+        if not user_has_role(request.user, ['Admin', 'Underwriter']):
+             raise PermissionDenied
+        return super().dispatch(request, *args, **kwargs)
     
     # Metadata for fields. In a real app, this could be introspected or config-driven.
     FIELD_CONFIG = {
@@ -325,13 +385,9 @@ class UserListView(LoginRequiredMixin, ListView):
     def get_queryset(self):
         # Only superusers should see this page typically, or check permissions
         # Only admins should see this page
-        if not user_has_role(self.request.user, ['admin']):
+        if not user_has_role(self.request.user, ['Admin']):
             return User.objects.none()
         return super().get_queryset()
-
-from django.views.generic.edit import UpdateView
-from django.urls import reverse_lazy
-from core.models import UserRole, Role
 
 class UserUpdateView(LoginRequiredMixin, UpdateView):
     model = User
@@ -340,8 +396,7 @@ class UserUpdateView(LoginRequiredMixin, UpdateView):
     success_url = reverse_lazy('user_list')
     
     def dispatch(self, request, *args, **kwargs):
-        if not user_has_role(request.user, ['admin']):
-             from django.core.exceptions import PermissionDenied
+        if not user_has_role(request.user, ['Admin']):
              raise PermissionDenied
         return super().dispatch(request, *args, **kwargs)
     
@@ -351,8 +406,6 @@ class UserUpdateView(LoginRequiredMixin, UpdateView):
         return form
 
     def form_valid(self, form):
-        from django.db import transaction
-        
         # Save user fields first
         response = super().form_valid(form)
         
@@ -367,9 +420,12 @@ class UserUpdateView(LoginRequiredMixin, UpdateView):
                     if rid and str(rid).isdigit():
                         UserRole.objects.create(user=self.object, role_id=int(rid))
         except Exception as e:
-            # If role update fails, we should probably log it, but for UI, we might flag it.
-            # However, super().form_valid already returned a redirect response.
-            # We can't easily change the response here to show error unless we catch earlier.
+            # Log the error but continue, or add message to user
+            messages.error(self.request, f"Error updating roles: {e}")
+            # we might want to let the user save succeed but warn about roles?
+            # or should we rollback? 
+            # If we are here, role clear might have happened 
+            # (unless atomic rolled it back, which it should).
             pass
             
         return response
@@ -377,11 +433,10 @@ class UserUpdateView(LoginRequiredMixin, UpdateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['all_roles'] = Role.objects.all()
-        context['user_role_ids'] = list(UserRole.objects.filter(user=self.object).values_list('role_id', flat=True))
+        # Ensure we're only getting role IDs
+        roles = UserRole.objects.filter(user=self.object).select_related('role')
+        context['user_role_ids'] = [ur.role.id for ur in roles]
         return context
-
-from .forms_custom import CustomUserCreationForm
-from django.views.generic.edit import CreateView
 
 class UserCreateView(LoginRequiredMixin, CreateView):
     model = User
@@ -390,8 +445,7 @@ class UserCreateView(LoginRequiredMixin, CreateView):
     success_url = reverse_lazy('user_list')
 
     def dispatch(self, request, *args, **kwargs):
-        if not user_has_role(request.user, ['admin']):
-            from django.core.exceptions import PermissionDenied
+        if not user_has_role(request.user, ['Admin']):
             raise PermissionDenied
         return super().dispatch(request, *args, **kwargs)
 
@@ -401,13 +455,23 @@ class UserCreateView(LoginRequiredMixin, CreateView):
         return context
 
     def form_valid(self, form):
-        response = super().form_valid(form)
-        # Create roles
-        role_ids = self.request.POST.getlist('roles')
-        for rid in set(role_ids):
-            if rid:
-                UserRole.objects.create(user=self.object, role_id=rid)
-        return response
+        try:
+            with transaction.atomic():
+                response = super().form_valid(form)
+                # Create roles
+                role_ids = self.request.POST.getlist('roles')
+                for rid in set(role_ids):
+                    if rid and str(rid).isdigit():
+                        UserRole.objects.create(user=self.object, role_id=int(rid))
+                return response
+        except Exception as e:
+            # If transaction fails, user is not created (or rolled back)
+            # But super().form_valid(form) might need handling if it returns response before transaction block?
+            # Actually super().form_valid calls form.save() which does DB write.
+            # So wrapping super().form_valid in atomic is correct.
+            # We should probably re-render form with error.
+            messages.error(self.request, f"Error creating user: {e}")
+            return self.form_invalid(form)
 
 class TestSingleSoapView(View):
     def get(self, request):

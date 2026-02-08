@@ -89,7 +89,7 @@
                         <a class="nav-link" href="{% url 'operation_list' %}">Operations</a>
                     </li>
                     {% load core_tags %}
-                    {% if user|has_role:'admin' %}
+                    {% if user|has_role:'Admin' %}
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'user_list' %}">Users & Roles</a>
                     </li>

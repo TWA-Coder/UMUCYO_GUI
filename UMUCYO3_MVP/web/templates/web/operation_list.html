@@ -14,9 +14,14 @@
             <div class="card-body text-center">
                 <h5 class="card-title">{{ op }}</h5>
                 <p class="card-text text-muted">Execute this operation.</p>
+                {% load core_tags %}
+                {% if user|has_role:'Admin,Underwriter' %}
                 <a href="{% url 'operation_execute' op %}" class="btn btn-outline-primary stretched-link">
                     Open Form &rarr;
                 </a>
+                {% else %}
+                <button class="btn btn-outline-secondary" disabled>View Only</button>
+                {% endif %}
             </div>
         </div>
     </div>

@@ -29,7 +29,8 @@
                         <td>{{ u.is_staff }}</td>
                         <td>{{ u.is_active }}</td>
                         <td>
-                            <a href="{% url 'user_edit' u.pk %}" class="btn btn-sm btn-primary">Edit Roles</a>
+                            <!-- Edit button removed as per requirements -->
+                            <span class="text-muted">Managed by Admin</span>
                         </td>
                     </tr>
                     {% endfor %}

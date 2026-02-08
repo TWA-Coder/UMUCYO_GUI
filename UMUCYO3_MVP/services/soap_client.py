@@ -121,24 +121,6 @@ class SoapClient:
             logger.error(f"Failed to write SOAP log: {e}")
 
     def call_operation(self, operation_name: str, user=None, **kwargs) -> Any:
-        # --- MOCK OVERRIDE ---
-        # Allow 'getTenderInformation' to pass through for testing
-        if getattr(settings, 'MOCK_SOAP_API', True):
-            start_time = time.time()
-            mock_response = {
-                "status": "MOCK_SUCCESS",
-                "message": f"Operation '{operation_name}' mocked successfully.",
-                "data": {
-                    "mock_id": "12345",
-                    "timestamp": datetime.now().isoformat(),
-                    "input_received": kwargs
-                }
-            }
-            # Log the mock request so dashboard visibility is maintained
-            self._log_request(operation_name, kwargs, start_time, result=mock_response, user=user)
-            return mock_response
-        # ---------------------
-
         service_method = getattr(self.client.service, operation_name)
         start_time = time.time()
         try:
