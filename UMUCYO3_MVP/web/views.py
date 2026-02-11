@@ -15,6 +15,9 @@ from services.soap_client import SoapClient
 from core.models import SoapRequestLog, UserRole, Role, RoleOperation
 from core.utils import user_has_role
 from .forms_custom import CustomUserCreationForm
+import logging
+
+logger = logging.getLogger(__name__)
 
 class CustomLoginView(LoginView):
     template_name = 'web/login.html'
@@ -416,16 +419,20 @@ class UserUpdateView(LoginRequiredMixin, UpdateView):
                 UserRole.objects.filter(user=self.object).delete()
                 
                 role_ids = self.request.POST.getlist('roles')
+                logger.info(f"Updating roles for user {self.object.username}. Raw role IDs: {role_ids}")
+                
+                if not role_ids:
+                    logger.warning(f"No roles provided for user {self.object.username}")
+
                 for rid in set(role_ids):
                     if rid and str(rid).isdigit():
                         UserRole.objects.create(user=self.object, role_id=int(rid))
+                        logger.info(f"Assigned role ID {rid} to user {self.object.username}")
         except Exception as e:
-            # Log the error but continue, or add message to user
+            logger.error(f"Error updating roles for user {self.object.username}: {e}", exc_info=True)
             messages.error(self.request, f"Error updating roles: {e}")
-            # we might want to let the user save succeed but warn about roles?
-            # or should we rollback? 
-            # If we are here, role clear might have happened 
-            # (unless atomic rolled it back, which it should).
+            # If role update fails, we should probably let the user know but keep the user update?
+            # The current logic keeps the user update.
             pass
             
         return response
@@ -460,18 +467,18 @@ class UserCreateView(LoginRequiredMixin, CreateView):
                 response = super().form_valid(form)
                 # Create roles
                 role_ids = self.request.POST.getlist('roles')
+                logger.info(f"Creating roles for new user {self.object.username}. Raw role IDs: {role_ids}")
+                
                 for rid in set(role_ids):
                     if rid and str(rid).isdigit():
                         UserRole.objects.create(user=self.object, role_id=int(rid))
+                        logger.info(f"Assigned role ID {rid} to new user {self.object.username}")
                 return response
         except Exception as e:
-            # If transaction fails, user is not created (or rolled back)
-            # But super().form_valid(form) might need handling if it returns response before transaction block?
-            # Actually super().form_valid calls form.save() which does DB write.
-            # So wrapping super().form_valid in atomic is correct.
-            # We should probably re-render form with error.
+            logger.error(f"Error creating user and assigning roles: {e}", exc_info=True)
             messages.error(self.request, f"Error creating user: {e}")
             return self.form_invalid(form)
+
 
 class TestSingleSoapView(View):
     def get(self, request):
