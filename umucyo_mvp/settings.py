@@ -87,10 +87,15 @@ WSGI_APPLICATION = 'umucyo_mvp.wsgi.application'
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
 
 DATABASES = {
-    'default': dj_database_url.config(
-        conn_max_age=600,
-        ssl_require=False  # Set to True in production with proper SSL
-    )
+    'default': {
+        'ENGINE':'django.db.backends.postgresql',
+        'NAME': 'umucyo_db',
+        'USER': 'admin',
+        'PASSWORD': 'OMIR2026!',
+        'HOST': '172.22.76.91',
+        'PORT': '5432',
+
+        }
 }
 
 
