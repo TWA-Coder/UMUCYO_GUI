@@ -8,7 +8,9 @@ __pycache__/
 venv/
 env/
 cyenv/
-
+.env
+.env.example
+umucyo_mvp/settings.py
 # Django
 db.sqlite3
 
