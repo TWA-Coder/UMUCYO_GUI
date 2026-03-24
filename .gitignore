@@ -18,7 +18,7 @@ db.sqlite3
 
 # Django settings (only if you REALLY want to ignore it)
 # Be careful: this can break your repo for others
-umucyo_mvp/settings.py
+#umucyo_mvp/settings.py
 
 # Static & media
 staticfiles/
