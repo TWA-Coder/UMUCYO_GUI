@@ -1,20 +1,37 @@
 # Python
 __pycache__/
-*.pyc
-*.pyo
-*.pyd
+*.py[cod]
+*$py.class
 
 # Virtual environments
 venv/
 env/
 cyenv/
+
+# Environment variables
 .env
-.env.example
-umucyo_mvp/settings.py
+.env.*
+
 # Django
 db.sqlite3
+*.sqlite3
 
-# OS
+# Django settings (only if you REALLY want to ignore it)
+# Be careful: this can break your repo for others
+umucyo_mvp/settings.py
+
+# Static & media
+staticfiles/
+media/
+
+# Logs
+*.log
+
+# OS files
 .DS_Store
 Thumbs.db
+
+# IDEs
+.vscode/
+.idea/
 
